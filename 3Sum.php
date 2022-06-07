@@ -8,24 +8,26 @@ class Solution {
      */
     function threeSum($nums) {
         
-        $sums = [];
-        
+        $result = [];
+        sort($nums);
         for ($i = 0; $i < count($nums); $i++) {
-            for ($j = $i + 1; $j < count($nums); $j++) {
-                for ($k = $j + 1; $k < count($nums); $k++) {
-                    
-                    if (($nums[$i] + $nums[$j] + $nums[$k]) === 0) {
-                        $sum = [$nums[$i], $nums[$j], $nums[$k]];
-                        sort($sum);
-                        if (!in_array($sum, $sums)) {
-                            $sums[] = $sum;
-                        }
-                    }
-                    
+            
+            $left = $i + 1;
+            $right = count($nums) - 1;
+            
+            while ($left < $right) {
+                if (($nums[$left] + $nums[$right] + $nums[$i]) > 0) {
+                    $right -= 1;
+                } else if (($nums[$left] + $nums[$right] + $nums[$i]) < 0) {
+                    $left += 1;
+                } else {
+                    $key = strval($nums[$i]) . strval($nums[$left]) . strval($nums[$right]);
+                    $result[$key] = [$nums[$i], $nums[$left], $nums[$right]];
+                    $left += 1;
                 }
             }
         }
         
-        return $sums;
+        return array_values($result);
     }
 }
