@@ -1,6 +1,5 @@
 <?php
 
-// TODO: Time Limit Exceeded
 class Solution {
 
     /**
@@ -9,15 +8,18 @@ class Solution {
      */
     function maxArea($height) {
         
-        $maxContainer = 0;
+        $maxContainer = -1;
+        $left = 0;
+        $right = count($height) - 1;
         
-        for ($i = 0; $i < count($height); $i++) {
-            for ($j = $i + 1; $j < count($height); $j++) {
-                
-                $container = min($height[$i], $height[$j]) * abs($i - $j);
-                if ($container > $maxContainer) {
-                    $maxContainer = $container;
-                }
+        while ($left < $right) {
+            $container = min($height[$left], $height[$right]) * ($right - $left);
+            $maxContainer = max($maxContainer, $container);
+            
+            if ($height[$left] < $height[$right]) {
+                $left++;
+            } else {
+                $right--;
             }
         }
         
