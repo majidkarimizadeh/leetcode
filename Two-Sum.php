@@ -8,12 +8,16 @@ class Solution {
      * @return Integer[]
      */
     function twoSum($nums, $target) {
+        
+        $visitedItems = [];
         for ($i = 0; $i < count($nums); $i++) {
-            for ($j = $i + 1; $j < count($nums); $j++) {
-                if($nums[$i] + $nums[$j] === $target) {
-                    return [$i, $j];
-                } 
-            }    
+            $diff = $target - $nums[$i];            
+            
+            if (array_key_exists($diff, $visitedItems)) {
+                return [$i, $visitedItems[$diff]];
+            } 
+            
+            $visitedItems[$nums[$i]] = $i;
         }
     }
 }
